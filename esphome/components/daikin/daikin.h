@@ -21,6 +21,7 @@ const uint8_t DAIKIN_MODE_ON = 0x01;
 
 // Fan Speed
 const uint8_t DAIKIN_FAN_AUTO = 0xA0;
+const uint8_t DAIKIN_FAN_SILENT = 0xB0;
 const uint8_t DAIKIN_FAN_1 = 0x30;
 const uint8_t DAIKIN_FAN_2 = 0x40;
 const uint8_t DAIKIN_FAN_3 = 0x50;
@@ -29,12 +30,13 @@ const uint8_t DAIKIN_FAN_5 = 0x70;
 
 // IR Transmission
 const uint32_t DAIKIN_IR_FREQUENCY = 38000;
-const uint32_t DAIKIN_HEADER_MARK = 3360;
-const uint32_t DAIKIN_HEADER_SPACE = 1760;
-const uint32_t DAIKIN_BIT_MARK = 360;
-const uint32_t DAIKIN_ONE_SPACE = 1370;
-const uint32_t DAIKIN_ZERO_SPACE = 520;
-const uint32_t DAIKIN_MESSAGE_SPACE = 32300;
+const uint32_t DAIKIN_HEADER_MARK = 3440;
+const uint32_t DAIKIN_HEADER_SPACE = 1720;
+const uint32_t DAIKIN_BIT_MARK = 430;
+const uint32_t DAIKIN_ONE_SPACE = 1320;
+const uint32_t DAIKIN_ZERO_SPACE = 430;
+const uint32_t DAIKIN_MESSAGE_SHORT_SPACE = 25000;
+const uint32_t DAIKIN_MESSAGE_SPACE = 35500;
 
 class DaikinClimate : public climate_ir::ClimateIR {
  public:
@@ -42,8 +44,8 @@ class DaikinClimate : public climate_ir::ClimateIR {
       : climate_ir::ClimateIR(
             DAIKIN_TEMP_MIN, DAIKIN_TEMP_MAX, 1.0f, true, true,
             std::vector<climate::ClimateFanMode>{climate::CLIMATE_FAN_AUTO, climate::CLIMATE_FAN_LOW,
-                                                 climate::CLIMATE_FAN_MEDIUM, climate::CLIMATE_FAN_HIGH},
-            std::vector<climate::ClimateSwingMode>{climate::CLIMATE_SWING_OFF, climate::CLIMATE_SWING_VERTICAL}) {}
+                                                 climate::CLIMATE_FAN_MEDIUM, climate::CLIMATE_FAN_HIGH, climate::CLIMATE_FAN_FOCUS},
+            std::vector<climate::ClimateSwingMode>{climate::CLIMATE_SWING_OFF, climate::CLIMATE_SWING_HORIZONTAL, climate::CLIMATE_SWING_VERTICAL}) {}
 
  protected:
   // Transmit via IR the state of this climate controller.
